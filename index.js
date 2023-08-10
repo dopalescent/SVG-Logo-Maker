@@ -1,19 +1,18 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const questions = require('./lib/questions.js');
-// const { colors } = require('./lib/colors.js');
 const { Circle, Square, Triangle } = require('./lib/shapes.js');
 
 
-const setShape = (textSubmit, textColor, shapeSubmit, shapeColor) => {
+const setShape = (shapeSubmit, shapeColor) => {
   if(shapeSubmit === 'circle') {
-    const logoShape = new Circle(shapeColor, textSubmit, textColor);
+    const logoShape = new Circle(shapeColor);
     return logoShape;
   } else if (shapeSubmit === 'square') {
-    const logoShape = new Square(shapeColor, textSubmit, textColor);
+    const logoShape = new Square(shapeColor);
     return logoShape;
   } else {
-    const logoShape = new Triangle(shapeColor, textSubmit, textColor);
+    const logoShape = new Triangle(shapeColor);
     return logoShape;
   };
 };
@@ -21,8 +20,7 @@ const setShape = (textSubmit, textColor, shapeSubmit, shapeColor) => {
 
 function writeToFile(textSubmit, textColor, shapeSubmit, shapeColor) {
 
-  const logoShape = setShape(textSubmit, textColor, shapeSubmit, shapeColor);
-  console.log(logoShape);
+  const logoShape = setShape(shapeSubmit, shapeColor);
 
   const svgTemplate = `
 <svg version="1.1"
@@ -43,9 +41,7 @@ function init() {
   inquirer
     .prompt(questions)
     .then((answers) => {
-      console.log(answers);
       const { textSubmit, textColor, shapeSubmit, shapeColor } = answers;
-      console.log(textSubmit, textColor, shapeSubmit, shapeColor);
       writeToFile(textSubmit, textColor, shapeSubmit, shapeColor);
     });
 };
